@@ -1,5 +1,4 @@
-namespace Portfolio_API;
-
+namespace Portfolio_API.Models;
 public class Item
 {
     public int ItemId { get; set; }

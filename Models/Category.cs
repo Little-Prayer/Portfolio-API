@@ -1,5 +1,4 @@
-namespace Portfolio_API;
-
+namespace Portfolio_API.Models;
 public class Category
 {
     public int CategoryId { get; set; }
