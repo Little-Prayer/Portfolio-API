@@ -5,14 +5,14 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using Portfolio_API;
+using Portfolio_API.Data;
 
 #nullable disable
 
 namespace Portfolio_API.Migrations
 {
     [DbContext(typeof(ItemContext))]
-    [Migration("20230420050012_InitialCreate")]
+    [Migration("20230424023651_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -40,7 +40,7 @@ namespace Portfolio_API.Migrations
                     b.ToTable("CategoryItem");
                 });
 
-            modelBuilder.Entity("Portfolio_API.Category", b =>
+            modelBuilder.Entity("Portfolio_API.Models.Category", b =>
                 {
                     b.Property<int>("CategoryId")
                         .ValueGeneratedOnAdd()
@@ -57,7 +57,7 @@ namespace Portfolio_API.Migrations
                     b.ToTable("Categories");
                 });
 
-            modelBuilder.Entity("Portfolio_API.Event", b =>
+            modelBuilder.Entity("Portfolio_API.Models.Event", b =>
                 {
                     b.Property<int>("EventId")
                         .ValueGeneratedOnAdd()
@@ -78,7 +78,7 @@ namespace Portfolio_API.Migrations
                     b.ToTable("Events");
                 });
 
-            modelBuilder.Entity("Portfolio_API.Item", b =>
+            modelBuilder.Entity("Portfolio_API.Models.Item", b =>
                 {
                     b.Property<int>("ItemId")
                         .ValueGeneratedOnAdd()
@@ -103,29 +103,29 @@ namespace Portfolio_API.Migrations
 
             modelBuilder.Entity("CategoryItem", b =>
                 {
-                    b.HasOne("Portfolio_API.Category", null)
+                    b.HasOne("Portfolio_API.Models.Category", null)
                         .WithMany()
                         .HasForeignKey("CategoriesCategoryId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Portfolio_API.Item", null)
+                    b.HasOne("Portfolio_API.Models.Item", null)
                         .WithMany()
                         .HasForeignKey("ItemsItemId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Portfolio_API.Event", b =>
+            modelBuilder.Entity("Portfolio_API.Models.Event", b =>
                 {
-                    b.HasOne("Portfolio_API.Item", null)
+                    b.HasOne("Portfolio_API.Models.Item", null)
                         .WithMany("Events")
                         .HasForeignKey("ItemId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Portfolio_API.Item", b =>
+            modelBuilder.Entity("Portfolio_API.Models.Item", b =>
                 {
                     b.Navigation("Events");
                 });
