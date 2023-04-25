@@ -11,14 +11,12 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 var cn = new SqlConnectionStringBuilder();
-cn.ServerSPN="172.18.0.2\\MSSQLSERVER";
+cn.ServerSPN="db\\MSSQLSERVER";
 cn.UserID = "sa";
 cn.Password="P@ssw0rd";
 cn.InitialCatalog="ManagedItems";
 cn.TrustServerCertificate = true;
 cn.PersistSecurityInfo = false;
-
-Console.WriteLine(cn.ConnectionString);
 
 builder.Services.AddSqlServer<ItemContext>(
     cn.ConnectionString
