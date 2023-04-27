@@ -24,13 +24,44 @@ public class CategoryService
     {
         return _context.Categories
             .AsNoTracking()
-            .SingleOrDefault(c => c.CategoryId==categoryId);
-    } 
+            .SingleOrDefault(c => c.CategoryId == categoryId);
+    }
 
     public Category? GetByName(string name)
     {
         return _context.Categories
             .AsNoTracking()
-            .SingleOrDefault(c => c.Name==name);
+            .SingleOrDefault(c => c.Name == name);
+    }
+
+    public Category Create(Category newCategory)
+    {
+        _context.Categories.Add(newCategory);
+        _context.SaveChanges();
+
+        return newCategory;
+    }
+
+    public void UpdateName(int categoryId, string _name)
+    {
+        var categoryToRename = _context.Categories.Find(categoryId);
+
+        if (categoryToRename is null)
+        {
+            throw new InvalidOperationException("Category does not exist");
+        }
+
+        categoryToRename.Name = _name;
+        _context.SaveChanges();
+    }
+    public void DeleteById(int Id)
+    {
+        var categoryToDelete = _context.Categories.Find(Id);
+
+        if (categoryToDelete is not null)
+        {
+            _context.Categories.Remove(categoryToDelete);
+            _context.SaveChanges();
+        }
     }
 }

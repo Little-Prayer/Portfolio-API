@@ -12,5 +12,5 @@ public class Category
     public String? Name { get; set; } 
     [JsonIgnore]
     public List<Item> Items { get; } = new();
-    //test
+
 }
