@@ -13,7 +13,7 @@ public class ItemService
         _context = context;
     }
 
-    public IEnumerable<Item> GetAll()
+    public List<Item> GetAll()
     {
         return _context.Items
             .Include(i => i.Categories)
@@ -37,7 +37,7 @@ public class ItemService
             .Include(i => i.Categories)
             .Include(i => i.Events)
             .AsNoTracking()
-            .SingleOrDefault(i => i.Name==name);
+            .SingleOrDefault(i => i.Name == name);
     }
 
     public Item Create(Item newItem)
@@ -122,7 +122,7 @@ public class ItemService
 
         _context.SaveChanges();
     }
-    public void UpdateSwapFrequency(int itemId,int _frequency)
+    public void UpdateSwapFrequency(int itemId, int _frequency)
     {
         var itemToUpdate = _context.Items.Find(itemId);
 
@@ -140,7 +140,7 @@ public class ItemService
     {
         var itemToDelete = _context.Items.Find(id);
 
-        if(itemToDelete is not null)
+        if (itemToDelete is not null)
         {
             _context.Items.Remove(itemToDelete);
             _context.SaveChanges();
