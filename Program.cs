@@ -1,5 +1,6 @@
 using Portfolio_API.Data;
 using Microsoft.Data.SqlClient;
+using Portfolio_API.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -21,6 +22,10 @@ cn.PersistSecurityInfo = false;
 builder.Services.AddSqlServer<ItemContext>(
     cn.ConnectionString
 );
+
+builder.Services.AddScoped<ItemService>();
+builder.Services.AddScoped<EventService>();
+builder.Services.AddScoped<CategoryService>();
 
 var app = builder.Build();
 
