@@ -5,7 +5,7 @@ using Portfolio_API.Models;
 namespace Portfolio_API.Controllers;
 
 [ApiController]
-[Route("item")]
+[Route("controller")]
 public class ItemController : ControllerBase
 {
 
@@ -39,6 +39,24 @@ public class ItemController : ControllerBase
             return NotFound();
 
         return item;
+    }
+
+    [HttpGet("{id}/event")]
+    public ActionResult<List<Event>> GetEvents(int id)
+    {
+        return _service.GetEvents(id);
+    }
+
+    [HttpGet("{id}/event/latest")]
+    public ActionResult<Event> GetLatestEvent(int id)
+    {
+        var ev= _service.GetEvents(id)
+            .OrderByDescending(e=>e.Date)
+            .FirstOrDefault();
+
+        if(ev == null)return NotFound();
+
+        return ev;
     }
 
     [HttpPost]
