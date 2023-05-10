@@ -5,7 +5,7 @@ using Portfolio_API.Models;
 namespace Portfolio_API.Controllers;
 
 [ApiController]
-[Route("controller")]
+[Route("[controller]")]
 public class ItemController : ControllerBase
 {
 
@@ -30,8 +30,8 @@ public class ItemController : ControllerBase
         return item;
     }
 
-    [HttpGet("data")]
-    public ActionResult<Item> GetByName([FromQuery]string name)
+    [HttpGet]
+    public ActionResult<Item> GetByName([FromQuery] string name)
     {
         var item = _service.GetByName(name);
 
@@ -50,11 +50,11 @@ public class ItemController : ControllerBase
     [HttpGet("{id}/event/latest")]
     public ActionResult<Event> GetLatestEvent(int id)
     {
-        var ev= _service.GetEvents(id)
-            .OrderByDescending(e=>e.Date)
+        var ev = _service.GetEvents(id)
+            .OrderByDescending(e => e.Date)
             .FirstOrDefault();
 
-        if(ev == null)return NotFound();
+        if (ev == null) return NotFound();
 
         return ev;
     }
@@ -63,7 +63,62 @@ public class ItemController : ControllerBase
     public IActionResult Create(Item newItem)
     {
         var _item = _service.Create(newItem);
-        return CreatedAtAction(nameof(GetById),new{id = _item!.ItemId},_item);
+        return CreatedAtAction(nameof(GetById), new { id = _item.ItemId }, _item);
     }
 
+    [HttpPost("{id}/events")]
+    public IActionResult AddEvent(int itemId, [FromBody]Event ev)
+    {
+        try
+        {
+            _service.AddEvent(itemId, ev);
+            return NoContent();
+        }
+        catch (InvalidOperationException)
+        {
+            return NotFound();
+        }
+    }
+
+    [HttpPut("{id}")]
+    public IActionResult UpdatePrice(int itemId, [FromQuery]decimal price)
+    {
+        try
+        {
+            _service.UpdatePrice(itemId, price);
+            return NoContent();
+        }
+        catch (InvalidOperationException)
+        {
+            return NotFound();
+        }
+    }
+
+    [HttpPut("{id}")]
+    public IActionResult UpdateSwapFrequency(int itemId,[FromQuery]int frequency)
+    {
+        try
+        {
+            _service.UpdateSwapFrequency(itemId,frequency);
+            return NoContent();
+        }
+        catch(InvalidOperationException)
+        {
+            return NotFound();
+        }
+    }
+
+    [HttpDelete("{id}")]
+    public IActionResult DeleteById(int id)
+    {
+        try
+        {
+            _service.DeleteById(id);
+            return NoContent();
+        }
+        catch(InvalidOperationException)
+        {
+            return NotFound();
+        }
+    }
 }

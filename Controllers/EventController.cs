@@ -17,6 +17,4 @@ public class EventController : ControllerBase
     [HttpGet]
     public ActionResult<List<Event>> GetAll()=>
         _service.GetAll();
-    
-
 }
