@@ -24,19 +24,17 @@ public class ItemController : ControllerBase
     {
         var item = _service.GetById(id);
 
-        if (item == null)
-            return NotFound();
+        if (item == null) return NotFound();
 
         return item;
     }
 
-    [HttpGet]
+    [HttpGet("data")]
     public ActionResult<Item> GetByName([FromQuery] string name)
     {
         var item = _service.GetByName(name);
 
-        if (item == null)
-            return NotFound();
+        if (item == null) return NotFound();
 
         return item;
     }
@@ -44,13 +42,15 @@ public class ItemController : ControllerBase
     [HttpGet("{id}/event")]
     public ActionResult<List<Event>> GetEvents(int id)
     {
-        return _service.GetEvents(id);
+        var ev = _service.GetEvents(id);
+        if (ev == null) return NotFound();
+        return ev;
     }
 
     [HttpGet("{id}/event/latest")]
     public ActionResult<Event> GetLatestEvent(int id)
     {
-        var ev = _service.GetEvents(id)
+        var ev = _service.GetEvents(id)?
             .OrderByDescending(e => e.Date)
             .FirstOrDefault();
 
@@ -67,7 +67,7 @@ public class ItemController : ControllerBase
     }
 
     [HttpPost("{id}/events")]
-    public IActionResult AddEvent(int itemId, [FromBody]Event ev)
+    public IActionResult AddEvent(int itemId, [FromBody] Event ev)
     {
         try
         {
@@ -81,28 +81,21 @@ public class ItemController : ControllerBase
     }
 
     [HttpPut("{id}")]
-    public IActionResult UpdatePrice(int itemId, [FromQuery]decimal price)
+    public IActionResult UpdatePrice(int itemId, [FromQuery] decimal? price, [FromQuery] int? frequency)
     {
         try
         {
-            _service.UpdatePrice(itemId, price);
+            if (price is not null)
+            {
+                _service.UpdatePrice(itemId, price.Value);
+            }
+            if (frequency is not null)
+            {
+                _service.UpdateSwapFrequency(itemId, frequency.Value);
+            }
             return NoContent();
         }
         catch (InvalidOperationException)
-        {
-            return NotFound();
-        }
-    }
-
-    [HttpPut("{id}")]
-    public IActionResult UpdateSwapFrequency(int itemId,[FromQuery]int frequency)
-    {
-        try
-        {
-            _service.UpdateSwapFrequency(itemId,frequency);
-            return NoContent();
-        }
-        catch(InvalidOperationException)
         {
             return NotFound();
         }
@@ -116,7 +109,7 @@ public class ItemController : ControllerBase
             _service.DeleteById(id);
             return NoContent();
         }
-        catch(InvalidOperationException)
+        catch (InvalidOperationException)
         {
             return NotFound();
         }

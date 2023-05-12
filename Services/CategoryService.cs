@@ -63,5 +63,9 @@ public class CategoryService
             _context.Categories.Remove(categoryToDelete);
             _context.SaveChanges();
         }
+        else
+        {
+            throw new InvalidCastException("category does not exist");
+        }
     }
 }

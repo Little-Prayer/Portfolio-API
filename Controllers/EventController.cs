@@ -17,4 +17,32 @@ public class EventController : ControllerBase
     [HttpGet]
     public ActionResult<List<Event>> GetAll()=>
         _service.GetAll();
+
+    [HttpPut("{id}")]
+    public IActionResult UpdateDate(int id,[FromQuery]DateTime date)
+    {
+        try
+        {
+            _service.UpdateDate(id,date);
+            return NoContent();
+        }
+        catch(InvalidOperationException)
+        {
+            return NotFound();
+        }
+    }
+
+    [HttpDelete("{id}")]
+    public IActionResult DeleteById(int id)
+    {
+        try
+        {
+            _service.DeleteById(id);
+            return NoContent();
+        }
+        catch(InvalidOperationException)
+        {
+            return NotFound();
+        }
+    }
 }

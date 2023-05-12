@@ -40,10 +40,10 @@ public class ItemService
             .SingleOrDefault(i => i.Name == name);
     }
 
-    public List<Event> GetEvents(int id)
+    public List<Event>? GetEvents(int id)
     {
         return _context.Items
-            .Single(i => i.ItemId==id)
+            .SingleOrDefault(i => i.ItemId==id)?
             .Events;
     }
 

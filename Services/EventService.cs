@@ -50,5 +50,9 @@ public class EventService
             _context.Events.Remove(eventToDelete);
             _context.SaveChanges();
         }
+        else
+        {
+            throw new InvalidOperationException("Event does not exist");
+        }
     }
 }
