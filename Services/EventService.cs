@@ -16,7 +16,7 @@ public class EventService
     public List<Event> GetAll()
     {
         return _context.Events
-            .Include(e => e.ItemId)
+            .Include(e => e.Item)
             .AsNoTracking()
             .ToList();
     }

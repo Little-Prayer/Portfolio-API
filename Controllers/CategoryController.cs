@@ -16,32 +16,31 @@ public class CategoryController : ControllerBase
     }
 
     [HttpGet]
-    public ActionResult<List<Category>> GetAll()=> _service.GetAll();
-    
+    public ActionResult<List<Category>> GetAll() => _service.GetAll();
+
     [HttpGet("{id}")]
     public ActionResult<Category> GetById(int id)
     {
         var category = _service.GetById(id);
-        if(category == null) return NotFound();
-        return category;
+        return category == null ? NotFound() : category;
     }
 
     [HttpPost]
     public IActionResult Create(Category newCategory)
     {
         var _category = _service.Create(newCategory);
-        return CreatedAtAction(nameof(GetById),new{id = _category.CategoryId},_category);
+        return CreatedAtAction(nameof(GetById), new { id = _category.CategoryId }, _category);
     }
 
     [HttpPut("{id}")]
-    public IActionResult UpdateName(int id,string _name)
+    public IActionResult UpdateName(int id, string _name)
     {
         try
         {
-            _service.UpdateName(id,_name);
+            _service.UpdateName(id, _name);
             return NoContent();
         }
-        catch(InvalidOperationException)
+        catch (InvalidOperationException)
         {
             return NotFound();
         }
@@ -55,7 +54,7 @@ public class CategoryController : ControllerBase
             _service.DeleteById(id);
             return NoContent();
         }
-        catch(InvalidOperationException)
+        catch (InvalidOperationException)
         {
             return NotFound();
         }
