@@ -1,5 +1,4 @@
 using System.ComponentModel.DataAnnotations;
-using System.Text.Json.Serialization;
 using Microsoft.EntityFrameworkCore;
 
 namespace Portfolio_API.Models;
@@ -10,7 +9,7 @@ public class Category
     public int CategoryId { get; set; }
     [Required]
     public String? Name { get; set; } 
-    [JsonIgnore]
+    
     public List<Item> Items { get; } = new();
 
 }

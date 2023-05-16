@@ -1,5 +1,4 @@
 using System.ComponentModel.DataAnnotations;
-using System.Text.Json.Serialization;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
 
@@ -15,8 +14,6 @@ public class Item
     [Column(TypeName = "decimal(18,4)")]
     public decimal Price { get; set; }
     public int? SwapFrequency { get; set; }
-    [JsonIgnore]
     public List<Category> Categories { get; } = new();
-    [JsonIgnore]
     public List<Event> Events { get; } = new();
 }

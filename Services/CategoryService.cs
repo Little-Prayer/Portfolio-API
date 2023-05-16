@@ -16,6 +16,7 @@ public class CategoryService
     public List<Category> GetAll()
     {
         return _context.Categories
+            .Include(c => c.Items)
             .AsNoTracking()
             .ToList();
     }
@@ -23,6 +24,7 @@ public class CategoryService
     public Category? GetById(int categoryId)
     {
         return _context.Categories
+            .Include(c => c.Items)
             .AsNoTracking()
             .SingleOrDefault(c => c.CategoryId == categoryId);
     }
@@ -30,6 +32,7 @@ public class CategoryService
     public Category? GetByName(string name)
     {
         return _context.Categories
+            .Include(c => c.Items)
             .AsNoTracking()
             .SingleOrDefault(c => c.Name == name);
     }
