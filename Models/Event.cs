@@ -9,4 +9,6 @@ public class Event
     public DateTime Date { get; set; }
     [Required]
     public Item Item { get; set; }=default!;
+
+    public string? Memo{get;set;}
 }

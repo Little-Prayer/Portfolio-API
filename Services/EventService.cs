@@ -29,11 +29,11 @@ public class EventService
         return newEvent;
     }
 
-    public void UpdateDate(int eventId,DateTime _date)
+    public void UpdateDate(int eventId, DateTime _date)
     {
         var eventToUpdate = _context.Events.Find(eventId);
 
-        if(eventToUpdate is null)
+        if (eventToUpdate is null)
         {
             throw new InvalidOperationException("Event does not exist");
         }
@@ -41,11 +41,24 @@ public class EventService
         eventToUpdate.Date = _date;
         _context.SaveChanges();
     }
+
+    public void UpdateMemo(int eventId, String _Memo)
+    {
+        var eventToUpdate = _context.Events.Find(eventId);
+
+        if (eventToUpdate is null)
+        {
+            throw new InvalidOperationException("Event does not exist");
+        }
+
+        eventToUpdate.Memo = _Memo;
+        _context.SaveChanges();
+    }
     public void DeleteById(int Id)
     {
         var eventToDelete = _context.Events.Find(Id);
 
-        if(eventToDelete is not null)
+        if (eventToDelete is not null)
         {
             _context.Events.Remove(eventToDelete);
             _context.SaveChanges();

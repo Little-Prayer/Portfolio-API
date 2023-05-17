@@ -31,6 +31,19 @@ public class EventController : ControllerBase
             return NotFound();
         }
     }
+    [HttpPut("{id}/Memo")]
+    public IActionResult UpdateMemo(int id,[FromBody]String Memo)
+    {
+        try
+        {
+            _service.UpdateMemo(id,Memo);
+            return NoContent();
+        }
+                catch(InvalidOperationException)
+        {
+            return NotFound();
+        }
+    }
 
     [HttpDelete("{id}")]
     public IActionResult DeleteById(int id)
