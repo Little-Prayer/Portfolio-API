@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Portfolio_API.Data;
 
@@ -11,9 +12,11 @@ using Portfolio_API.Data;
 namespace Portfolio_API.Migrations
 {
     [DbContext(typeof(ItemContext))]
-    partial class ItemContextModelSnapshot : ModelSnapshot
+    [Migration("20230518015124_AddItemMemoColumn")]
+    partial class AddItemMemoColumn
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -96,8 +99,8 @@ namespace Portfolio_API.Migrations
                     b.Property<decimal>("Price")
                         .HasColumnType("decimal(18,4)");
 
-                    b.Property<long?>("Ticks")
-                        .HasColumnType("bigint");
+                    b.Property<int?>("SwapFrequency")
+                        .HasColumnType("int");
 
                     b.HasKey("ItemId");
 

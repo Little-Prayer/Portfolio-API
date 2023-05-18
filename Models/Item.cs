@@ -13,7 +13,7 @@ public class Item
     [Required]
     [Column(TypeName = "decimal(18,4)")]
     public decimal Price { get; set; }
-    public int? SwapFrequency { get; set; }
+    public long? Ticks { get; set; }
     public List<Category> Categories { get; } = new();
     public List<Event> Events { get; } = new();
 }

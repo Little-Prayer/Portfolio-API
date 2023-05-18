@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Portfolio_API.Data;
 
@@ -11,9 +12,11 @@ using Portfolio_API.Data;
 namespace Portfolio_API.Migrations
 {
     [DbContext(typeof(ItemContext))]
-    partial class ItemContextModelSnapshot : ModelSnapshot
+    [Migration("20230518043540_SwapFrequencyIntToLong")]
+    partial class SwapFrequencyIntToLong
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -96,7 +99,7 @@ namespace Portfolio_API.Migrations
                     b.Property<decimal>("Price")
                         .HasColumnType("decimal(18,4)");
 
-                    b.Property<long?>("Ticks")
+                    b.Property<long?>("SwapFrequency")
                         .HasColumnType("bigint");
 
                     b.HasKey("ItemId");

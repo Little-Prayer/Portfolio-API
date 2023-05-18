@@ -69,6 +69,20 @@ public class ItemService
         _context.SaveChanges();
     }
 
+        public void UpdateName(int itemId, string _name)
+    {
+        var itemToUpdate = _context.Items.Find(itemId);
+
+        if (itemToUpdate is null)
+        {
+            throw new InvalidOperationException("Item does not exist");
+        }
+
+        itemToUpdate.Name = _name;
+
+        _context.SaveChanges();
+    }
+
     public void UpdatePrice(int itemId, decimal _price)
     {
         var itemToUpdate = _context.Items.Find(itemId);
@@ -82,7 +96,7 @@ public class ItemService
 
         _context.SaveChanges();
     }
-    public void UpdateSwapFrequency(int itemId, int _frequency)
+    public void UpdateSwapFrequency(int itemId, long _frequency)
     {
         var itemToUpdate = _context.Items.Find(itemId);
 
@@ -91,7 +105,7 @@ public class ItemService
             throw new InvalidOperationException("Item does not exist");
         }
 
-        itemToUpdate.SwapFrequency = _frequency;
+        itemToUpdate.Ticks = _frequency;
 
         _context.SaveChanges();
     }

@@ -81,7 +81,7 @@ public class ItemController : ControllerBase
     }
 
     [HttpPut("{id}")]
-    public IActionResult UpdatePrice(int itemId, [FromQuery] decimal? price, [FromQuery] int? frequency)
+    public IActionResult UpdatePrice(int itemId,[FromQuery]string? name, [FromQuery] decimal? price, [FromQuery] int? frequency)
     {
         try
         {
@@ -92,6 +92,10 @@ public class ItemController : ControllerBase
             if (frequency is not null)
             {
                 _service.UpdateSwapFrequency(itemId, frequency.Value);
+            }
+            if(name is not null)
+            {
+                _service.UpdateName(itemId,name);
             }
             return NoContent();
         }
