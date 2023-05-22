@@ -43,6 +43,7 @@ public class ItemService
     public List<Event>? GetEvents(int id)
     {
         return _context.Items
+            .Include(i=> i.Events)
             .SingleOrDefault(i => i.ItemId==id)?
             .Events;
     }
