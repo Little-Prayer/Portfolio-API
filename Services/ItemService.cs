@@ -43,8 +43,8 @@ public class ItemService
     public List<Event>? GetEvents(int id)
     {
         return _context.Items
-            .Include(i=> i.Events)
-            .SingleOrDefault(i => i.ItemId==id)?
+            .Include(i => i.Events)
+            .SingleOrDefault(i => i.ItemId == id)?
             .Events;
     }
 
@@ -70,7 +70,7 @@ public class ItemService
         _context.SaveChanges();
     }
 
-        public void UpdateName(int itemId, string _name)
+    public void UpdateName(int itemId, string _name)
     {
         var itemToUpdate = _context.Items.Find(itemId);
 
@@ -107,6 +107,20 @@ public class ItemService
         }
 
         itemToUpdate.Ticks = _frequency;
+
+        _context.SaveChanges();
+    }
+
+    public void UpdateBulk(int itemId, Item _item)
+    {
+        var itemToUpdate = _context.Items.Find(itemId);
+
+        if (itemToUpdate is null)
+        {
+            throw new InvalidOperationException("Item does not exist");
+        }
+
+        itemToUpdate = _item;
 
         _context.SaveChanges();
     }

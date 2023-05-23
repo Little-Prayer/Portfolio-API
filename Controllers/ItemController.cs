@@ -104,6 +104,19 @@ public class ItemController : ControllerBase
             return NotFound();
         }
     }
+    [HttpPut("{id}/bulk")]
+    public IActionResult UpdateBulk(int itemId,[FromBody]Item _item)
+    {
+        try
+        {
+            _service.UpdateBulk(itemId,_item);
+            return NoContent();
+        }
+        catch(InvalidOperationException)
+        {
+            return NotFound();
+        }
+    }
 
     [HttpDelete("{id}")]
     public IActionResult DeleteById(int id)

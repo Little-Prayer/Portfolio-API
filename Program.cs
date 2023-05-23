@@ -35,7 +35,12 @@ cn.TrustServerCertificate = true;
 cn.PersistSecurityInfo = false;
 
 builder.Services.AddSqlServer<ItemContext>(
-    cn.ConnectionString
+    cn.ConnectionString,
+    null,
+    options=>
+    {
+        options.EnableSensitiveDataLogging();
+    }
 );
 
 builder.Services.AddScoped<ItemService>();
