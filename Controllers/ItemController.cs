@@ -67,11 +67,11 @@ public class ItemController : ControllerBase
     }
 
     [HttpPost("{id}/events")]
-    public IActionResult AddEvent(int itemId, [FromBody] Event ev)
+    public IActionResult AddEvent(int id, [FromBody] Event ev)
     {
         try
         {
-            _service.AddEvent(itemId, ev);
+            _service.AddEvent(id, ev);
             return NoContent();
         }
         catch (InvalidOperationException)
@@ -79,37 +79,12 @@ public class ItemController : ControllerBase
             return NotFound();
         }
     }
-
     [HttpPut("{id}")]
-    public IActionResult UpdatePrice(int itemId,[FromQuery]string? name, [FromQuery] decimal? price, [FromQuery] int? frequency)
+    public IActionResult Update(int id,[FromBody]Item _item)
     {
         try
         {
-            if (price is not null)
-            {
-                _service.UpdatePrice(itemId, price.Value);
-            }
-            if (frequency is not null)
-            {
-                _service.UpdateSwapFrequency(itemId, frequency.Value);
-            }
-            if(name is not null)
-            {
-                _service.UpdateName(itemId,name);
-            }
-            return NoContent();
-        }
-        catch (InvalidOperationException)
-        {
-            return NotFound();
-        }
-    }
-    [HttpPut("{id}/bulk")]
-    public IActionResult UpdateBulk(int itemId,[FromBody]Item _item)
-    {
-        try
-        {
-            _service.UpdateBulk(itemId,_item);
+            _service.Update(id,_item);
             return NoContent();
         }
         catch(InvalidOperationException)

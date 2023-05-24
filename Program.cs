@@ -24,6 +24,7 @@ builder.Services.AddControllers()
         .AddJsonOptions(options=>
         {
             options.JsonSerializerOptions.ReferenceHandler=ReferenceHandler.IgnoreCycles;
+            options.JsonSerializerOptions.PropertyNameCaseInsensitive = true;
         });
 
 var cn = new SqlConnectionStringBuilder();
@@ -39,7 +40,7 @@ builder.Services.AddSqlServer<ItemContext>(
     null,
     options=>
     {
-        options.EnableSensitiveDataLogging();
+        options.EnableSensitiveDataLogging(true);
     }
 );
 

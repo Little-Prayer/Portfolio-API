@@ -65,62 +65,26 @@ public class ItemService
             throw new InvalidOperationException("Item or Event does not exist");
         }
 
-        itemToUpdate.Events.Add(eventToAdd);
+        itemToUpdate.Events!.Add(eventToAdd);
 
         _context.SaveChanges();
     }
 
-    public void UpdateName(int itemId, string _name)
+    public void Update(int itemId, Item _item)
     {
         var itemToUpdate = _context.Items.Find(itemId);
+
+        Console.WriteLine(itemId);
 
         if (itemToUpdate is null)
         {
             throw new InvalidOperationException("Item does not exist");
         }
 
-        itemToUpdate.Name = _name;
-
-        _context.SaveChanges();
-    }
-
-    public void UpdatePrice(int itemId, decimal _price)
-    {
-        var itemToUpdate = _context.Items.Find(itemId);
-
-        if (itemToUpdate is null)
-        {
-            throw new InvalidOperationException("Item does not exist");
-        }
-
-        itemToUpdate.Price = _price;
-
-        _context.SaveChanges();
-    }
-    public void UpdateSwapFrequency(int itemId, long _frequency)
-    {
-        var itemToUpdate = _context.Items.Find(itemId);
-
-        if (itemToUpdate is null)
-        {
-            throw new InvalidOperationException("Item does not exist");
-        }
-
-        itemToUpdate.Ticks = _frequency;
-
-        _context.SaveChanges();
-    }
-
-    public void UpdateBulk(int itemId, Item _item)
-    {
-        var itemToUpdate = _context.Items.Find(itemId);
-
-        if (itemToUpdate is null)
-        {
-            throw new InvalidOperationException("Item does not exist");
-        }
-
-        itemToUpdate = _item;
+        itemToUpdate.Name = _item.Name ?? itemToUpdate.Name;
+        itemToUpdate.Price = _item.Price ?? itemToUpdate.Price;
+        itemToUpdate.Ticks = _item.Ticks ?? itemToUpdate.Ticks;
+        if (_item.Ticks == 0) itemToUpdate.Ticks = null;
 
         _context.SaveChanges();
     }
