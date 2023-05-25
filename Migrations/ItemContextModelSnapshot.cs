@@ -83,17 +83,16 @@ namespace Portfolio_API.Migrations
 
             modelBuilder.Entity("Portfolio_API.Models.Item", b =>
                 {
-                    b.Property<int>("ItemId")
+                    b.Property<int?>("ItemId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ItemId"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int?>("ItemId"));
 
                     b.Property<string>("Name")
-                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<decimal>("Price")
+                    b.Property<decimal?>("Price")
                         .HasColumnType("decimal(18,4)");
 
                     b.Property<long?>("Ticks")
@@ -102,7 +101,8 @@ namespace Portfolio_API.Migrations
                     b.HasKey("ItemId");
 
                     b.HasIndex("Name")
-                        .IsUnique();
+                        .IsUnique()
+                        .HasFilter("[Name] IS NOT NULL");
 
                     b.ToTable("Items");
                 });
