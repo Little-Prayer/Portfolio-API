@@ -12,7 +12,9 @@ builder.Services.AddCors(options=>
     options.AddPolicy(MyAllowSpecificOrigins,
                     policy=>
                     {
-                        policy.WithOrigins("http://127.0.0.1:5264");
+                        policy.WithOrigins("http://127.0.0.1:5264")
+                                .AllowAnyHeader()
+                                .AllowAnyMethod();
                     });
 });
 
