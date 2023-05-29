@@ -62,6 +62,7 @@ public class ItemController : ControllerBase
     [HttpPost]
     public IActionResult Create(Item newItem)
     {
+        newItem.ItemId = null;
         var _item = _service.Create(newItem);
         return CreatedAtAction(nameof(GetById), new { id = _item.ItemId }, _item);
     }
