@@ -30,11 +30,9 @@ public class ItemController : ControllerBase
     }
 
     [HttpGet("data")]
-    public ActionResult<Item> GetByName([FromQuery] string name)
+    public ActionResult<Item?> GetByName([FromQuery] string name)
     {
         var item = _service.GetByName(name);
-
-        if (item == null) return NotFound();
 
         return item;
     }
@@ -81,14 +79,14 @@ public class ItemController : ControllerBase
         }
     }
     [HttpPut("{id}")]
-    public IActionResult Update(int id,[FromBody]Item _item)
+    public IActionResult Update(int id, [FromBody] Item _item)
     {
         try
         {
-            _service.Update(id,_item);
+            _service.Update(id, _item);
             return NoContent();
         }
-        catch(InvalidOperationException)
+        catch (InvalidOperationException)
         {
             return NotFound();
         }
