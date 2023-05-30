@@ -95,12 +95,12 @@ public class ItemController : ControllerBase
     }
 
     [HttpDelete("{id}")]
-    public IActionResult DeleteById(int id)
+    public ActionResult<Item> DeleteById(int id)
     {
         try
         {
-            _service.DeleteById(id);
-            return NoContent();
+            var deletedItem = _service.DeleteById(id);
+            return deletedItem;
         }
         catch (InvalidOperationException)
         {

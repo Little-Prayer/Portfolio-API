@@ -89,7 +89,7 @@ public class ItemService
         _context.SaveChanges();
     }
 
-    public void DeleteById(int id)
+    public Item DeleteById(int id)
     {
         var itemToDelete = _context.Items.Find(id);
 
@@ -97,6 +97,7 @@ public class ItemService
         {
             _context.Items.Remove(itemToDelete);
             _context.SaveChanges();
+            return itemToDelete;
         }
         else
         {
