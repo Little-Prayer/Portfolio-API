@@ -31,13 +31,14 @@ public class ItemService
             .SingleOrDefault(i => i.ItemId == id);
     }
 
-    public Item? GetByName(string name)
+    public List<Item> GetByName(string name)
     {
         return _context.Items
             .Include(i => i.Categories)
             .Include(i => i.Events)
             .AsNoTracking()
-            .SingleOrDefault(i => i.Name == name);
+            .Where(i => i.Name!.Contains(name))
+            .ToList();
     }
 
     public List<Event>? GetEvents(int id)

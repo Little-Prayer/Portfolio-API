@@ -30,11 +30,11 @@ public class ItemController : ControllerBase
     }
 
     [HttpGet("data")]
-    public ActionResult<Item?> GetByName([FromQuery] string name)
+    public ActionResult<List<Item>> GetByName([FromQuery] string name)
     {
-        var item = _service.GetByName(name);
+        var items = _service.GetByName(name);
 
-        return item;
+        return items;
     }
 
     [HttpGet("{id}/event")]
