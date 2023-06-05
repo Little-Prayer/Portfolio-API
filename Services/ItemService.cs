@@ -86,6 +86,7 @@ public class ItemService
         itemToUpdate.Price = _item.Price ?? itemToUpdate.Price;
         itemToUpdate.Ticks = _item.Ticks ?? itemToUpdate.Ticks;
         if (_item.Ticks == 0) itemToUpdate.Ticks = null;
+        if (_item.Categories is not null) SetCategories(itemToUpdate, _item.Categories);
 
         _context.SaveChanges();
     }
@@ -104,6 +105,28 @@ public class ItemService
         {
             throw new InvalidOperationException("Item does not exist");
         }
+    }
+
+    public void SetCategories(Item itemToCategoriesSet, ICollection<Category> categoriesToSet)
+    {
+        if (itemToCategoriesSet.Categories is null)
+        {
+            itemToCategoriesSet.Categories = new HashSet<Category>();
+        }
+        else
+        {
+            foreach (var catToDel in itemToCategoriesSet.Categories)
+            {
+                itemToCategoriesSet.Categories.Remove(catToDel);
+            }
+        }
+
+        foreach (var catToAdd in categoriesToSet)
+        {
+            var catToSet = _context.Categories.Find(catToAdd.CategoryId);
+            itemToCategoriesSet.Categories.Add(catToSet!);
+        }
+        _context.SaveChanges();
     }
 
 
