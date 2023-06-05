@@ -13,4 +13,11 @@ public class ItemContext : DbContext
      : base(options)
     {
     }
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        base.OnModelCreating(modelBuilder);
+        modelBuilder.Entity<Item>()
+                    .HasMany(i=>i.Categories)
+                    .WithMany(c=>c.Items);
+    }
 }

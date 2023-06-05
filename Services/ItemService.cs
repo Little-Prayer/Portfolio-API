@@ -46,7 +46,7 @@ public class ItemService
         return _context.Items
             .Include(i => i.Events)
             .SingleOrDefault(i => i.ItemId == id)?
-            .Events;
+            .Events?.ToList();
     }
 
     public Item Create(Item newItem)

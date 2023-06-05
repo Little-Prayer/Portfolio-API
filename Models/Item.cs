@@ -12,6 +12,6 @@ public class Item
     [Column(TypeName = "decimal(18,4)")]
     public decimal? Price { get; set; }
     public long? Ticks { get; set; }
-    public List<Category>? Categories { get; }
-    public List<Event>? Events { get; }
+    public ISet<Category>? Categories { get; set;}
+    public IList<Event>? Events { get; set;}
 }
