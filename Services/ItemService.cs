@@ -51,10 +51,17 @@ public class ItemService
 
     public Item Create(Item newItem)
     {
-        _context.Items.Add(newItem);
+        var tempItem = new Item();
+        tempItem.Name = newItem.Name;
+        tempItem.Price = newItem.Price;
+        tempItem.Ticks = newItem.Ticks;
+        if (newItem.Ticks == 0) tempItem.Ticks = null;
+
+        var savedItem = _context.Items.Add(tempItem);
+        if(newItem.Categories is not null)SetCategories(savedItem.Entity,newItem.Categories);
         _context.SaveChanges();
 
-        return newItem;
+        return savedItem.Entity;
     }
 
     public void AddEvent(int itemId, Event eventToAdd)
@@ -74,8 +81,8 @@ public class ItemService
     public void Update(int itemId, Item _item)
     {
         var itemToUpdate = _context.Items
-                                    .Include(i=>i.Categories)
-                                    .SingleOrDefault(i=>i.ItemId == itemId);
+                                    .Include(i => i.Categories)
+                                    .SingleOrDefault(i => i.ItemId == itemId);
 
         Console.WriteLine(itemId);
 
@@ -119,7 +126,7 @@ public class ItemService
         {
             foreach (var catToDel in itemToCategoriesSet.Categories)
             {
-                itemToCategoriesSet.Categories.Remove(catToDel);   
+                itemToCategoriesSet.Categories.Remove(catToDel);
             }
         }
 
@@ -128,6 +135,5 @@ public class ItemService
             var catToSet = _context.Categories.Find(catToAdd.CategoryId);
             itemToCategoriesSet.Categories.Add(catToSet!);
         }
-        _context.SaveChanges();
     }
 }
