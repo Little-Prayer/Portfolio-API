@@ -73,7 +73,9 @@ public class ItemService
 
     public void Update(int itemId, Item _item)
     {
-        var itemToUpdate = _context.Items.Find(itemId);
+        var itemToUpdate = _context.Items
+                                    .Include(i=>i.Categories)
+                                    .SingleOrDefault(i=>i.ItemId == itemId);
 
         Console.WriteLine(itemId);
 
@@ -117,7 +119,7 @@ public class ItemService
         {
             foreach (var catToDel in itemToCategoriesSet.Categories)
             {
-                itemToCategoriesSet.Categories.Remove(catToDel);
+                itemToCategoriesSet.Categories.Remove(catToDel);   
             }
         }
 
@@ -128,8 +130,4 @@ public class ItemService
         }
         _context.SaveChanges();
     }
-
-
-
-
 }
