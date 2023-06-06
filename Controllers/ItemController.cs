@@ -65,11 +65,12 @@ public class ItemController : ControllerBase
         return CreatedAtAction(nameof(GetById), new { id = _item.ItemId }, _item);
     }
 
-    [HttpPost("{id}/events")]
+    [HttpPost("{id}/event")]
     public IActionResult AddEvent(int id, [FromBody] Event ev)
     {
         try
         {
+            Console.WriteLine(id);
             _service.AddEvent(id, ev);
             return NoContent();
         }

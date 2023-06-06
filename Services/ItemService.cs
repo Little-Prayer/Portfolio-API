@@ -58,7 +58,7 @@ public class ItemService
         if (newItem.Ticks == 0) tempItem.Ticks = null;
 
         var savedItem = _context.Items.Add(tempItem);
-        if(newItem.Categories is not null)SetCategories(savedItem.Entity,newItem.Categories);
+        if (newItem.Categories is not null) SetCategories(savedItem.Entity, newItem.Categories);
         _context.SaveChanges();
 
         return savedItem.Entity;
@@ -66,14 +66,14 @@ public class ItemService
 
     public void AddEvent(int itemId, Event eventToAdd)
     {
-        var itemToUpdate = _context.Items.Find(itemId);
+        var itemToUpdate = _context.Items.Include(i => i.Events).SingleOrDefault(i => i.ItemId == itemId);
 
         if (itemToUpdate is null)
         {
             throw new InvalidOperationException("Item or Event does not exist");
         }
 
-        itemToUpdate.Events!.Add(eventToAdd);
+        itemToUpdate.Events?.Add(eventToAdd);
 
         _context.SaveChanges();
     }
