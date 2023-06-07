@@ -26,7 +26,7 @@ public class CategoryController : ControllerBase
     }
 
     [HttpPost]
-    public IActionResult Create(Category newCategory)
+    public IActionResult Create([FromBody]Category newCategory)
     {
         var _category = _service.Create(newCategory);
         return CreatedAtAction(nameof(GetById), new { id = _category.CategoryId }, _category);

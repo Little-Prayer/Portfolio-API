@@ -15,31 +15,38 @@ public class EventController : ControllerBase
     }
 
     [HttpGet]
-    public ActionResult<List<Event>> GetAll()=>
+    public ActionResult<List<Event>> GetAll() =>
         _service.GetAll();
 
+    [HttpGet("{id}")]
+    public ActionResult<Event> GetById(int id)
+    {
+        var _event = _service.GetById(id);
+        return _event is null ? NotFound() : _event;
+    }
+
     [HttpPut("{id}")]
-    public IActionResult UpdateDate(int id,[FromQuery]DateTime date)
+    public IActionResult UpdateDate(int id, [FromQuery] DateTime date)
     {
         try
         {
-            _service.UpdateDate(id,date);
+            _service.UpdateDate(id, date);
             return NoContent();
         }
-        catch(InvalidOperationException)
+        catch (InvalidOperationException)
         {
             return NotFound();
         }
     }
     [HttpPut("{id}/Memo")]
-    public IActionResult UpdateMemo(int id,[FromBody]String Memo)
+    public IActionResult UpdateMemo(int id, [FromBody] String Memo)
     {
         try
         {
-            _service.UpdateMemo(id,Memo);
+            _service.UpdateMemo(id, Memo);
             return NoContent();
         }
-                catch(InvalidOperationException)
+        catch (InvalidOperationException)
         {
             return NotFound();
         }
@@ -53,7 +60,7 @@ public class EventController : ControllerBase
             _service.DeleteById(id);
             return NoContent();
         }
-        catch(InvalidOperationException)
+        catch (InvalidOperationException)
         {
             return NotFound();
         }

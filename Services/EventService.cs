@@ -21,6 +21,14 @@ public class EventService
             .ToList();
     }
 
+    public Event? GetById(int eventId)
+    {
+        return _context.Events
+                        .Include(e=>e.Item)
+                        .AsNoTracking()
+                        .SingleOrDefault(e=>e.EventId == eventId);
+    }
+
     public Event Create(Event newEvent)
     {
         _context.Events.Add(newEvent);
