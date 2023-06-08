@@ -25,6 +25,7 @@ public class CategoryService
     {
         return _context.Categories
             .Include(c => c.Items)
+            .ThenInclude(i=>i.Events)
             .AsNoTracking()
             .SingleOrDefault(c => c.CategoryId == categoryId);
     }
