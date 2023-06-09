@@ -58,7 +58,7 @@ public class CategoryService
         categoryToRename.Name = _name;
         _context.SaveChanges();
     }
-    public void DeleteById(int Id)
+    public Category DeleteById(int Id)
     {
         var categoryToDelete = _context.Categories.Find(Id);
 
@@ -66,6 +66,7 @@ public class CategoryService
         {
             _context.Categories.Remove(categoryToDelete);
             _context.SaveChanges();
+            return categoryToDelete;
         }
         else
         {

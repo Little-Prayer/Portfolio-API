@@ -47,12 +47,12 @@ public class CategoryController : ControllerBase
     }
 
     [HttpDelete("{id}")]
-    public IActionResult DeleteById(int id)
+    public ActionResult<Category> DeleteById(int id)
     {
         try
         {
-            _service.DeleteById(id);
-            return NoContent();
+            var deleted =_service.DeleteById(id);
+            return deleted;
         }
         catch (InvalidOperationException)
         {
