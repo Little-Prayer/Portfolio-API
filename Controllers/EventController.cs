@@ -53,12 +53,12 @@ public class EventController : ControllerBase
     }
 
     [HttpDelete("{id}")]
-    public IActionResult DeleteById(int id)
+    public ActionResult<Event> DeleteById(int id)
     {
         try
         {
-            _service.DeleteById(id);
-            return NoContent();
+            var deletedEvent =  _service.DeleteById(id);
+            return deletedEvent;
         }
         catch (InvalidOperationException)
         {

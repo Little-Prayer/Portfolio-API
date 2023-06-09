@@ -62,7 +62,7 @@ public class EventService
         eventToUpdate.Memo = _Memo;
         _context.SaveChanges();
     }
-    public void DeleteById(int Id)
+    public Event DeleteById(int Id)
     {
         var eventToDelete = _context.Events.Find(Id);
 
@@ -70,6 +70,7 @@ public class EventService
         {
             _context.Events.Remove(eventToDelete);
             _context.SaveChanges();
+            return eventToDelete;
         }
         else
         {
