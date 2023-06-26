@@ -13,5 +13,5 @@ public class Item
     public decimal? Price { get; set; }
     public long? Ticks { get; set; }
     public ISet<Category>? Categories { get; set;}
-    public IList<Event>? Events { get; set;}
+    public IList<Swap>? Swaps { get; set;}
 }

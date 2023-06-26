@@ -47,7 +47,7 @@ builder.Services.AddSqlServer<ItemContext>(
 );
 
 builder.Services.AddScoped<ItemService>();
-builder.Services.AddScoped<EventService>();
+builder.Services.AddScoped<SwapService>();
 builder.Services.AddScoped<CategoryService>();
 
 var app = builder.Build();

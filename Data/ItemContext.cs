@@ -7,7 +7,7 @@ public class ItemContext : DbContext
 {
     public DbSet<Item> Items => Set<Item>();
     public DbSet<Category> Categories => Set<Category>();
-    public DbSet<Event> Events => Set<Event>();
+    public DbSet<Swap> Swaps => Set<Swap>();
 
     public ItemContext(DbContextOptions<ItemContext> options)
      : base(options)
