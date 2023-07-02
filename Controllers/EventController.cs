@@ -1,11 +1,15 @@
 using Microsoft.AspNetCore.Mvc;
 using Portfolio_API.Services;
 using Portfolio_API.Models;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.Identity.Web.Resource;
 
 namespace Portfolio_API.Controllers;
 
 [ApiController]
 [Route("[controller]")]
+[Authorize]
+[RequiredScope(RequiredScopesConfigurationKey = "AzureAdB2C:Scopes")]
 public class EventController : ControllerBase
 {
     private readonly EventService _service;
@@ -57,7 +61,7 @@ public class EventController : ControllerBase
     {
         try
         {
-            var deletedEvent =  _service.DeleteById(id);
+            var deletedEvent = _service.DeleteById(id);
             return deletedEvent;
         }
         catch (InvalidOperationException)

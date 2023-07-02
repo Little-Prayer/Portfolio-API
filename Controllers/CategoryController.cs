@@ -1,11 +1,16 @@
 using Microsoft.AspNetCore.Mvc;
 using Portfolio_API.Services;
 using Portfolio_API.Models;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.Identity.Web.Resource;
+
 
 namespace Portfolio_API.Controllers;
 
 [ApiController]
 [Route("[controller]")]
+[Authorize]
+[RequiredScope(RequiredScopesConfigurationKey = "AzureAdB2C:Scopes")]
 public class CategoryController : ControllerBase
 {
     private readonly CategoryService _service;
@@ -26,7 +31,7 @@ public class CategoryController : ControllerBase
     }
 
     [HttpPost]
-    public IActionResult Create([FromBody]Category newCategory)
+    public IActionResult Create([FromBody] Category newCategory)
     {
         var _category = _service.Create(newCategory);
         return CreatedAtAction(nameof(GetById), new { id = _category.CategoryId }, _category);
@@ -51,7 +56,7 @@ public class CategoryController : ControllerBase
     {
         try
         {
-            var deleted =_service.DeleteById(id);
+            var deleted = _service.DeleteById(id);
             return deleted;
         }
         catch (InvalidOperationException)

@@ -2,15 +2,17 @@ using Portfolio_API.Data;
 using Microsoft.Data.SqlClient;
 using Portfolio_API.Services;
 using System.Text.Json.Serialization;
+using Microsoft.Identity.Web;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 
-var  MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
+var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.AddCors(options=>
+builder.Services.AddCors(options =>
 {
     options.AddPolicy(MyAllowSpecificOrigins,
-                    policy=>
+                    policy =>
                     {
                         policy.WithOrigins("http://127.0.0.1:5264")
                                 .AllowAnyHeader()
@@ -23,24 +25,24 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddControllers()
-        .AddJsonOptions(options=>
+        .AddJsonOptions(options =>
         {
-            options.JsonSerializerOptions.ReferenceHandler=ReferenceHandler.IgnoreCycles;
+            options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
             options.JsonSerializerOptions.PropertyNameCaseInsensitive = true;
         });
 
 var cn = new SqlConnectionStringBuilder();
-cn.ServerSPN="db\\MSSQLSERVER";
+cn.ServerSPN = "db\\MSSQLSERVER";
 cn.UserID = "sa";
-cn.Password="P@ssw0rd";
-cn.InitialCatalog="ManagedItems";
+cn.Password = "P@ssw0rd";
+cn.InitialCatalog = "ManagedItems";
 cn.TrustServerCertificate = true;
 cn.PersistSecurityInfo = false;
 
 builder.Services.AddSqlServer<ItemContext>(
     cn.ConnectionString,
     null,
-    options=>
+    options =>
     {
         options.EnableSensitiveDataLogging(true);
     }
@@ -49,6 +51,10 @@ builder.Services.AddSqlServer<ItemContext>(
 builder.Services.AddScoped<ItemService>();
 builder.Services.AddScoped<EventService>();
 builder.Services.AddScoped<CategoryService>();
+
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddMicrosoftIdentityWebApi(builder.Configuration.GetSection("AzureAdB2C"));
+
 
 var app = builder.Build();
 
