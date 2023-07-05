@@ -41,18 +41,18 @@ public class ItemController : ControllerBase
         return items;
     }
 
-    [HttpGet("{id}/event")]
-    public ActionResult<List<Event>> GetEvents(int id)
+    [HttpGet("{id}/swap")]
+    public ActionResult<List<Swap>> GetSwap(int id)
     {
-        var ev = _service.GetEvents(id);
+        var ev = _service.GetSwap(id);
         if (ev == null) return NotFound();
         return ev;
     }
 
-    [HttpGet("{id}/event/latest")]
-    public ActionResult<Event> GetLatestEvent(int id)
+    [HttpGet("{id}/swap/latest")]
+    public ActionResult<Swap> GetLatestSwap(int id)
     {
-        var ev = _service.GetEvents(id)?
+        var ev = _service.GetSwap(id)?
             .OrderByDescending(e => e.Date)
             .FirstOrDefault();
 
@@ -69,13 +69,13 @@ public class ItemController : ControllerBase
         return CreatedAtAction(nameof(GetById), new { id = _item.ItemId }, _item);
     }
 
-    [HttpPost("{id}/event")]
-    public IActionResult AddEvent(int id, [FromBody] Event ev)
+    [HttpPost("{id}/swap")]
+    public IActionResult AddSwap(int id, [FromBody] Swap ev)
     {
         try
         {
             Console.WriteLine(id);
-            _service.AddEvent(id, ev);
+            _service.AddSwap(id, ev);
             return NoContent();
         }
         catch (InvalidOperationException)

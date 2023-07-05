@@ -17,7 +17,7 @@ public class ItemService
     {
         return _context.Items
             .Include(i => i.Categories)
-            .Include(i => i.Events)
+            .Include(i => i.Swaps)
             .AsNoTracking()
             .ToList();
     }
@@ -26,7 +26,7 @@ public class ItemService
     {
         return _context.Items
             .Include(i => i.Categories)
-            .Include(i => i.Events)
+            .Include(i => i.Swaps)
             .AsNoTracking()
             .SingleOrDefault(i => i.ItemId == id);
     }
@@ -35,18 +35,18 @@ public class ItemService
     {
         return _context.Items
             .Include(i => i.Categories)
-            .Include(i => i.Events)
+            .Include(i => i.Swaps)
             .AsNoTracking()
             .Where(i => i.Name!.Contains(name))
             .ToList();
     }
 
-    public List<Event>? GetEvents(int id)
+    public List<Swap>? GetSwap(int id)
     {
         return _context.Items
-            .Include(i => i.Events)
+            .Include(i => i.Swaps)
             .SingleOrDefault(i => i.ItemId == id)?
-            .Events?.ToList();
+            .Swaps?.ToList();
     }
 
     public Item Create(Item newItem)
@@ -64,16 +64,16 @@ public class ItemService
         return savedItem.Entity;
     }
 
-    public void AddEvent(int itemId, Event eventToAdd)
+    public void AddSwap(int itemId, Swap swapToAdd)
     {
-        var itemToUpdate = _context.Items.Include(i => i.Events).SingleOrDefault(i => i.ItemId == itemId);
+        var itemToUpdate = _context.Items.Include(i => i.Swaps).SingleOrDefault(i => i.ItemId == itemId);
 
         if (itemToUpdate is null)
         {
-            throw new InvalidOperationException("Item or Event does not exist");
+            throw new InvalidOperationException("Item or swap does not exist");
         }
 
-        itemToUpdate.Events?.Add(eventToAdd);
+        itemToUpdate.Swaps?.Add(swapToAdd);
 
         _context.SaveChanges();
     }

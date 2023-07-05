@@ -57,30 +57,6 @@ namespace Portfolio_API.Migrations
                     b.ToTable("Categories");
                 });
 
-            modelBuilder.Entity("Portfolio_API.Models.Event", b =>
-                {
-                    b.Property<int>("EventId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("EventId"));
-
-                    b.Property<DateTime>("Date")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("ItemId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Memo")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("EventId");
-
-                    b.HasIndex("ItemId");
-
-                    b.ToTable("Events");
-                });
-
             modelBuilder.Entity("Portfolio_API.Models.Item", b =>
                 {
                     b.Property<int?>("ItemId")
@@ -107,6 +83,30 @@ namespace Portfolio_API.Migrations
                     b.ToTable("Items");
                 });
 
+            modelBuilder.Entity("Portfolio_API.Models.Swap", b =>
+                {
+                    b.Property<int>("SwapId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("SwapId"));
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int?>("ItemId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Memo")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("SwapId");
+
+                    b.HasIndex("ItemId");
+
+                    b.ToTable("Swaps");
+                });
+
             modelBuilder.Entity("CategoryItem", b =>
                 {
                     b.HasOne("Portfolio_API.Models.Category", null)
@@ -122,20 +122,18 @@ namespace Portfolio_API.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Portfolio_API.Models.Event", b =>
+            modelBuilder.Entity("Portfolio_API.Models.Swap", b =>
                 {
                     b.HasOne("Portfolio_API.Models.Item", "Item")
-                        .WithMany("Events")
-                        .HasForeignKey("ItemId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .WithMany("Swaps")
+                        .HasForeignKey("ItemId");
 
                     b.Navigation("Item");
                 });
 
             modelBuilder.Entity("Portfolio_API.Models.Item", b =>
                 {
-                    b.Navigation("Events");
+                    b.Navigation("Swaps");
                 });
 #pragma warning restore 612, 618
         }

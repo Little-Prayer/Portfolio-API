@@ -10,23 +10,23 @@ namespace Portfolio_API.Controllers;
 [Route("[controller]")]
 [Authorize]
 [RequiredScope(RequiredScopesConfigurationKey = "AzureAdB2C:Scopes")]
-public class EventController : ControllerBase
+public class SwapController : ControllerBase
 {
-    private readonly EventService _service;
-    public EventController(EventService service)
+    private readonly SwapService _service;
+    public SwapController(SwapService service)
     {
         _service = service;
     }
 
     [HttpGet]
-    public ActionResult<List<Event>> GetAll() =>
+    public ActionResult<List<Swap>> GetAll() =>
         _service.GetAll();
 
     [HttpGet("{id}")]
-    public ActionResult<Event> GetById(int id)
+    public ActionResult<Swap> GetById(int id)
     {
-        var _event = _service.GetById(id);
-        return _event is null ? NotFound() : _event;
+        var _swap = _service.GetById(id);
+        return _swap is null ? NotFound() : _swap;
     }
 
     [HttpPut("{id}")]
@@ -57,12 +57,12 @@ public class EventController : ControllerBase
     }
 
     [HttpDelete("{id}")]
-    public ActionResult<Event> DeleteById(int id)
+    public ActionResult<Swap> DeleteById(int id)
     {
         try
         {
-            var deletedEvent = _service.DeleteById(id);
-            return deletedEvent;
+            var deletedSwap = _service.DeleteById(id);
+            return deletedSwap;
         }
         catch (InvalidOperationException)
         {
