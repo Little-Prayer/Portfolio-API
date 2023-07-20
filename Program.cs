@@ -71,6 +71,8 @@ app.UseCors(MyAllowSpecificOrigins);
 
 app.UseAuthorization();
 
+app.UseAuthentication();
+
 app.MapControllers();
 
 app.Run();
