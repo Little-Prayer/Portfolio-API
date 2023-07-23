@@ -2,6 +2,9 @@ using Portfolio_API.Data;
 using Microsoft.Data.SqlClient;
 using Portfolio_API.Services;
 using System.Text.Json.Serialization;
+using Microsoft.Identity.Web;
+using Microsoft.Identity.Web.UI;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 
 var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
 var builder = WebApplication.CreateBuilder(args);
@@ -12,7 +15,7 @@ builder.Services.AddCors(options =>
     options.AddPolicy(MyAllowSpecificOrigins,
                     policy =>
                     {
-                        policy.WithOrigins("http://127.0.0.1:5264")
+                        policy.WithOrigins("https://127.0.0.1:5264")
                                 .AllowAnyHeader()
                                 .AllowAnyMethod();
                     });
@@ -28,6 +31,9 @@ builder.Services.AddControllers()
             options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
             options.JsonSerializerOptions.PropertyNameCaseInsensitive = true;
         });
+
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+.AddMicrosoftIdentityWebApi(builder.Configuration.GetSection("AzureAdB2C"));
 
 var cn = new SqlConnectionStringBuilder();
 cn.ServerSPN = "db\\MSSQLSERVER";
