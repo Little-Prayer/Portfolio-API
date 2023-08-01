@@ -6,9 +6,9 @@ using Microsoft.Identity.Web.Resource;
 
 namespace Portfolio_API.Controllers;
 
+[Authorize]
 [ApiController]
 [Route("[controller]")]
-[Authorize]
 [RequiredScope(RequiredScopesConfigurationKey = "AzureAdB2C:Scopes")]
 public class ItemController : ControllerBase
 {
@@ -20,8 +20,12 @@ public class ItemController : ControllerBase
     }
 
     [HttpGet]
-    public ActionResult<List<Item>> GetAll() =>
-        _service.GetAll();
+    public ActionResult<List<Item>> GetAll()
+    {
+        return new List<Item> ();
+    }
+
+        //_service.GetAll();
 
     [HttpGet("{id}")]
     public ActionResult<Item> GetById(int id)
