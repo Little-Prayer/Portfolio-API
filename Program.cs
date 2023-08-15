@@ -3,7 +3,6 @@ using Microsoft.Data.SqlClient;
 using Portfolio_API.Services;
 using System.Text.Json.Serialization;
 using Microsoft.Identity.Web;
-using Microsoft.Identity.Web.UI;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 
 var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
@@ -21,6 +20,15 @@ builder.Services.AddCors(options =>
                     });
 });
 
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+.AddMicrosoftIdentityWebApi(options =>
+{
+    builder.Configuration.Bind("AzureAdB2C", options);
+
+    options.TokenValidationParameters.NameClaimType = "name";
+},
+options => { builder.Configuration.Bind("AzureAdB2C", options); });
+
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
@@ -32,8 +40,7 @@ builder.Services.AddControllers()
             options.JsonSerializerOptions.PropertyNameCaseInsensitive = true;
         });
 
-builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-.AddMicrosoftIdentityWebApi(builder.Configuration.GetSection("AzureAdB2C"));
+
 
 var cn = new SqlConnectionStringBuilder();
 cn.ServerSPN = "db\\MSSQLSERVER";
@@ -70,6 +77,8 @@ app.UseHttpsRedirection();
 app.UseCors(MyAllowSpecificOrigins);
 
 app.UseAuthorization();
+
+app.UseAuthentication();
 
 app.MapControllers();
 

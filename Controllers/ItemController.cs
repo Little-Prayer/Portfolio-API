@@ -9,7 +9,7 @@ namespace Portfolio_API.Controllers;
 [Authorize]
 [ApiController]
 [Route("[controller]")]
-[RequiredScope(RequiredScopesConfigurationKey = "AzureAdB2C:Scopes")]
+[RequiredScope("API.Access")]
 public class ItemController : ControllerBase
 {
 
