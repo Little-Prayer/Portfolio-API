@@ -8,11 +8,12 @@ public class Category
 {
     public int CategoryId { get; set; }
     [Required]
-    public String? Name { get; set; } 
-    
+    public String? Name { get; set; }
+
+    public User? User { get; set; }
     public List<Item> Items { get; } = new();
 
-        public override int GetHashCode()
+    public override int GetHashCode()
     {
         return Name!.GetHashCode() ^ CategoryId!.GetHashCode();
     }

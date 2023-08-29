@@ -9,6 +9,8 @@ public class ItemContext : DbContext
     public DbSet<Category> Categories => Set<Category>();
     public DbSet<Swap> Swaps => Set<Swap>();
 
+    public DbSet<User> Users => Set <User>();
+
     public ItemContext(DbContextOptions<ItemContext> options)
      : base(options)
     {
