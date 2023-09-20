@@ -13,5 +13,35 @@ public class UserService
         _context = context;
     }
 
-    
+    public List<User> GetAll()
+    {
+        return _context.Users
+            .Include(u => u.Categories)
+            .Include(u => u.Items)
+            .Include(u => u.Swaps)
+            .AsNoTracking()
+            .ToList();
+    }
+
+    public User? GetById(int id)
+    {
+        return _context.Users
+            .Include(u => u.Categories)
+            .Include(u => u.Items)
+            .Include(u => u.Swaps)
+            .AsNoTracking()
+            .SingleOrDefault(u => u.UserId == id);
+    }
+
+    public User? GetByEmail(string address)
+    {
+        return _context.Users
+            .Include(u => u.Categories)
+            .Include(u => u.Items)
+            .Include(u => u.Swaps)
+            .AsNoTracking()
+            .SingleOrDefault(u => u.UserEmail == address);
+    }
+
+
 }
