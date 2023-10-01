@@ -43,5 +43,29 @@ public class UserService
             .SingleOrDefault(u => u.UserEmail == address);
     }
 
+    public User? Create(User newUser)
+    {
+        _context.Users.Add(newUser);
+        _context.SaveChanges();
 
+        return newUser;
+    }
+
+    public void UpdateEmail(int userId,string email)
+    {
+        var userToUpdate = _context.Users.Find(userId) ?? throw new InvalidOperationException("User does not exist");
+
+        userToUpdate.UserEmail = email;
+        _context.SaveChanges();
+    }
+
+    public User DeleteUser(int id)
+    {
+        var userToDelete = _context.Users.Find(id) ?? throw new InvalidCastException("User does not exist");
+
+        _context.Users.Remove(userToDelete);
+        _context.SaveChanges();
+
+        return userToDelete;
+    }
 }
